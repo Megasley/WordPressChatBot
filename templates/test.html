@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Test Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+        }
+        
+        .test-header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .test-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #4a6adc;
+        }
+        
+        .test-header p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .test-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+        }
+        
+        .main-panel {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .side-panel {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: #4a6adc;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .sample-query {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f2f5;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .sample-query:hover {
+            background-color: #e1e5eb;
+        }
+        
+        .console-log {
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #222;
+            color: #eee;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-top: 20px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+        
+        .sample-document {
+            margin-top: 30px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #4a6adc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #5e81f4;
+        }
+        
+        @media (max-width: 768px) {
+            .test-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>AI Chatbot Test Page</h1>
+        <p>This page allows you to test the AI chatbot directly in your browser without requiring WordPress integration. The chat widget appears in the bottom-right corner - click the icon to start a conversation.</p>
+    </div>
+    
+    <div class="test-content">
+        <div class="main-panel">
+            <h2>Testing Instructions</h2>
+            <p>You can test the chat by clicking on the chat icon in the bottom-right corner of this page. The chatbot will appear as it would on a WordPress site.</p>
+            
+            <h3>Sample Questions To Try</h3>
+            <div class="sample-queries">
+                <div class="sample-query" onclick="useQuery('What services do you offer?')">What services do you offer?</div>
+                <div class="sample-query" onclick="useQuery('How can I contact customer support?')">How can I contact customer support?</div>
+                <div class="sample-query" onclick="useQuery('What are your business hours?')">What are your business hours?</div>
+                <div class="sample-query" onclick="useQuery('Tell me about your return policy')">Tell me about your return policy</div>
+                <div class="sample-query" onclick="useQuery('Do you have any special discounts?')">Do you have any special discounts?</div>
+            </div>
+            
+            <div class="sample-document">
+                <h3>Add Test Document</h3>
+                <p>You can quickly add a document to test the knowledge base functionality:</p>
+                <textarea id="sample-document">
+# Company Information
+
+## About Us
+We are a leading provider of AI-powered solutions for businesses of all sizes. Our mission is to make artificial intelligence accessible to everyone.
+
+## Services
+We offer a range of services including:
+- Custom AI development
+- Chatbot integration
+- Natural language processing solutions
+- Data analytics and insights
+- AI training and workshops
+
+## Contact
+You can reach our customer support team at support@example.com or call us at (555) 123-4567.
+
+## Business Hours
+Monday-Friday: 9:00 AM - 6:00 PM
+Saturday: 10:00 AM - 4:00 PM
+Sunday: Closed
+
+## Return Policy
+We offer a 30-day money-back guarantee on all our software subscriptions. If you're not satisfied with our services, simply email support@example.com within 30 days of purchase for a full refund.
+
+## Special Offers
+New customers receive a 15% discount on their first subscription. We also offer seasonal promotions throughout the year - join our newsletter to stay updated.
+                </textarea>
+                <button onclick="addDocument()">Add Test Document</button>
+            </div>
+            
+            <div class="console-log" id="console-log">
+                <div class="log-entry">// Console output will appear here</div>
+            </div>
+        </div>
+        
+        <div class="side-panel">
+            <h2>Widget Status</h2>
+            <div id="widget-status">
+                <p>Checking widget status...</p>
+            </div>
+            
+            <h3>Quick Actions</h3>
+            <button onclick="document.getElementById('wp-ai-chatbot-icon').click()">Open Chat</button>
+            <button onclick="clearConsole()" style="background-color: #666; margin-top: 10px;">Clear Console</button>
+            
+            <h3>Navigation</h3>
+            <p><a href="/admin">Go to Admin Panel</a></p>
+            <p><a href="/">Go to Widget Demo</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Console log interceptor
+        const consoleLog = document.getElementById('console-log');
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        
+        console.log = function() {
+            const args = Array.from(arguments);
+            originalConsoleLog.apply(console, args);
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = '> ' + args.map(arg => {
+                if (typeof arg === 'object') {
+                    return JSON.stringify(arg);
+                }
+                return arg;
+            }).join(' ');
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        };
+        
+        console.error = function() {
+            const args = Array.from(arguments);
+            originalConsoleError.apply(console, args);
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.style.color = '#ff6b6b';
+            logEntry.innerHTML = '❌ ' + args.map(arg => {
+                if (typeof arg === 'object') {
+                    return JSON.stringify(arg);
+                }
+                return arg;
+            }).join(' ');
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        };
+        
+        // Check widget status
+        function checkWidgetStatus() {
+            setTimeout(() => {
+                const widget = document.getElementById('wp-ai-chatbot-container');
+                const widgetStatus = document.getElementById('widget-status');
+                
+                if (widget) {
+                    widgetStatus.innerHTML = `
+                        <p style="color: #4caf50;">✓ Widget loaded successfully</p>
+                        <p>Click the chat icon in the bottom-right corner to start a conversation.</p>
+                    `;
+                    console.log('Chat widget initialized successfully');
+                } else {
+                    widgetStatus.innerHTML = `
+                        <p style="color: #f44336;">✗ Widget failed to load</p>
+                        <p>Check console for errors.</p>
+                    `;
+                    console.error('Chat widget failed to initialize');
+                }
+            }, 2000);
+        }
+        
+        // Use a sample query
+        function useQuery(query) {
+            console.log('Selected sample query: ' + query);
+            
+            // Get the widget input field
+            setTimeout(() => {
+                const inputField = document.getElementById('wp-ai-chatbot-input');
+                const sendButton = document.getElementById('wp-ai-chatbot-send');
+                const chatWindow = document.getElementById('wp-ai-chatbot-window');
+                
+                if (inputField && sendButton) {
+                    // Make sure chat is open
+                    if (!chatWindow.classList.contains('active')) {
+                        document.getElementById('wp-ai-chatbot-icon').click();
+                    }
+                    
+                    // Set the value and trigger input event to adjust height
+                    inputField.value = query;
+                    const event = new Event('input', { bubbles: true });
+                    inputField.dispatchEvent(event);
+                    
+                    // Focus the input
+                    inputField.focus();
+                } else {
+                    console.error('Chat input not found. Is the widget loaded?');
+                }
+            }, 500);
+        }
+        
+        // Add a test document
+        function addDocument() {
+            const documentText = document.getElementById('sample-document').value;
+            const filename = 'test_document.md';
+            
+            console.log('Uploading test document...');
+            
+            // Create a file from the text content
+            const file = new File([documentText], filename, { type: 'text/markdown' });
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            // Upload to the API
+            fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Document uploaded successfully:', data.message);
+                alert('Test document uploaded successfully! You can now ask questions about the content.');
+            })
+            .catch(error => {
+                console.error('Error uploading document:', error);
+                alert('Failed to upload document. See console for details.');
+            });
+        }
+        
+        // Clear console
+        function clearConsole() {
+            consoleLog.innerHTML = '<div class="log-entry">// Console cleared</div>';
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            checkWidgetStatus();
+        });
+    </script>
+    
+    <!-- Load the chat widget -->
+    <script src="/widget.js"></script>
+</body>
+</html>

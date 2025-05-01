@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>African Bitcoin Sidekick</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat_widget.css') }}">
+</head>
+<body>
+    <div id="wp-ai-chatbot-container">
+        <div id="wp-ai-chatbot-window">
+            <div id="wp-ai-chatbot-header">
+                <div>
+                    <h3>Hey, I'm your African Bitcoin Sidekick</h3>
+                    <p>Ask anything about Bitcoin in Africa—get answers, resources, events, and guides instantly.</p>
+                </div>
+                <button id="wp-ai-chatbot-close">×</button>
+    </div>
+    
+            <div id="wp-ai-chatbot-messages">
+                <div id="wp-ai-chatbot-welcome">
+                    <img src="{{ url_for('static', filename='images/robot-mascot.svg') }}" alt="African Bitcoin Sidekick" class="wp-ai-chatbot-robot">
+                    
+                    <div class="wp-ai-chatbot-suggested-searches">
+                        <h4>SUGGESTED SEARCHES</h4>
+                        <div class="wp-ai-chatbot-search-buttons">
+                            <button class="wp-ai-chatbot-search-button">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11h2v6h-2zm0-4h2v2h-2z"/></svg>
+                                What is Bitcoin and why does it matter for Africa?
+                            </button>
+                            <button class="wp-ai-chatbot-search-button">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11h2v6h-2zm0-4h2v2h-2z"/></svg>
+                                How can I buy and sell Bitcoin safely in Africa?
+                            </button>
+                            <button class="wp-ai-chatbot-search-button">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11h2v6h-2zm0-4h2v2h-2z"/></svg>
+                                What are the best Bitcoin wallets for African users?
+                            </button>
+                            <button class="wp-ai-chatbot-search-button">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11h2v6h-2zm0-4h2v2h-2z"/></svg>
+                                How can Bitcoin help with cross-border payments in Africa?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        
+            <div id="wp-ai-chatbot-input-container">
+                <input type="text" id="wp-ai-chatbot-input" placeholder="Search Bitcoin topics, resources, events, and guides...">
+                <button id="wp-ai-chatbot-send">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+        </div>
+        </div>
+        
+        <button id="wp-ai-chatbot-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+        </button>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/markdown-parser.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat_widget.js') }}"></script>
+</body>
+</html>

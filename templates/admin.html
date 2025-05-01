@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordPress AI Chatbot Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>WordPress AI Chatbot Admin</h1>
+            <p>Manage your AI assistant powered by DeepSeek API</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Alert container for notifications -->
+        <div id="alert-container"></div>
+
+        <!-- Usage Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.total_messages }}</div>
+                <div class="stat-label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.total_sessions }}</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ documents|length }}</div>
+                <div class="stat-label">Documents</div>
+            </div>
+            {% if stats.positive_feedback + stats.negative_feedback > 0 %}
+            <div class="stat-card">
+                <div class="stat-value">{{ (stats.positive_feedback / (stats.positive_feedback + stats.negative_feedback) * 100)|round }}%</div>
+                <div class="stat-label">Positive Ratings</div>
+            </div>
+            {% else %}
+            <div class="stat-card">
+                <div class="stat-value">0%</div>
+                <div class="stat-label">Positive Ratings</div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- API Usage Statistics -->
+        <div class="card">
+            <div class="card-header">
+                <h2>API Usage Statistics</h2>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>API Calls</th>
+                            <th>Tokens Used</th>
+                            <th>Unique Sessions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usage in api_usage %}
+                        <tr>
+                            <td>{{ usage.date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ usage.api_calls }}</td>
+                            <td>{{ usage.tokens_used }}</td>
+                            <td>{{ usage.unique_sessions }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">No API usage data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Document Upload -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Upload Documents</h2>
+            </div>
+            <div class="card-body">
+                <form id="upload-form">
+                    <div class="file-upload" id="file-upload">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3>Drag & Drop Files Here</h3>
+                        <p>Or</p>
+                        <button type="button" class="file-upload-button" id="file-button">Choose File</button>
+                        <input type="file" class="file-upload-input" id="file-input" accept=".txt,.md">
+                        <div class="file-info" id="file-info">No file selected</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Upload Document</button>
+                    </div>
+                </form>
+                <div>
+                    <p><strong>Note:</strong> Only .txt and .md files are supported. Files will be automatically split into chunks and embedded into the vector database.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document List -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Uploaded Documents</h2>
+            </div>
+            <div class="card-body">
+                <div class="document-list">
+                    {% if documents %}
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th>Chunks</th>
+                                    <th>Upload Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doc in documents %}
+                                <tr>
+                                    <td>{{ doc.original_filename }}</td>
+                                    <td>{{ doc.file_type }}</td>
+                                    <td>{{ doc.file_size|filesizeformat }}</td>
+                                    <td>{{ doc.chunk_count }}</td>
+                                    <td>{{ doc.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm delete-doc-btn" data-doc-id="{{ doc.id }}">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="document-item">No documents have been uploaded yet.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- API Settings -->
+        <div class="card">
+            <div class="card-header">
+                <h2>DeepSeek API Settings</h2>
+            </div>
+            <div class="card-body">
+                <form id="api-key-form">
+                    <div class="form-group">
+                        <label for="api-key">DeepSeek API Key</label>
+                        <input type="password" id="api-key" class="form-control" placeholder="Enter your DeepSeek API key">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="save-key-button">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Chat Configuration -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Chat Configuration</h2>
+            </div>
+            <div class="card-body">
+                <form id="chat-config-form">
+                    <div class="form-group">
+                        <label for="chat-title">Chat Title</label>
+                        <input type="text" id="chat-title" class="form-control" value="AI Assistant" placeholder="Enter chat widget title">
+                    </div>
+                    <div class="form-group">
+                        <label for="welcome-message">Welcome Message</label>
+                        <textarea id="welcome-message" class="form-control" placeholder="Enter welcome message">Hello! I'm your AI assistant. How can I help you today?</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="primary-color">Primary Color</label>
+                        <input type="color" id="primary-color" class="form-control" value="#4a6adc">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save Configuration</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Chat History -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Chat History</h2>
+            </div>
+            <div class="card-body">
+                <div class="chat-sessions">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Session ID</th>
+                                <th>Created</th>
+                                <th>Last Activity</th>
+                                <th>Messages</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sessions-table">
+                            <tr>
+                                <td colspan="5" class="text-center">Loading sessions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Conversation Viewer (hidden by default) -->
+                <div id="conversation-viewer" style="display: none;">
+                    <div class="conversation-header">
+                        <button id="back-to-sessions" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> Back to Sessions
+                        </button>
+                        <h3 id="conversation-title">Conversation</h3>
+                    </div>
+                    <div class="conversation-messages" id="conversation-messages">
+                        <!-- Messages will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WordPress Integration -->
+        <div class="card">
+            <div class="card-header">
+                <h2>WordPress Integration</h2>
+            </div>
+            <div class="card-body">
+                <p>Add the following script to your WordPress site to integrate the chatbot:</p>
+                <div class="form-group">
+                    <textarea class="form-control" readonly rows="3"><script src="{{ request.host_url }}widget.js"></script></textarea>
+                </div>
+                <p>You can add this script using the "Insert Headers and Footers" plugin or by adding it to your theme's footer.php file.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>

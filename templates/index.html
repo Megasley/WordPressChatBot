@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>African Bitcoin Sidekick - Your Guide to Bitcoin in Africa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat_widget.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #2D3748;
+        }
+        
+        .hero {
+            background-color: #2D3748;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #e2e8f0;
+        }
+        
+        .features {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2D3748;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #FF6B4A;
+            margin-top: 0;
+        }
+        
+        .feature-card p {
+            color: #4A5568;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .features {
+                padding: 40px 20px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to African Bitcoin Sidekick</h1>
+        <p>Your personal guide to understanding and using Bitcoin in Africa. Get instant answers, resources, and guidance.</p>
+    </div>
+    
+    <div class="features">
+        <h2>How Can We Help You?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Learn About Bitcoin</h3>
+                <p>Understand what Bitcoin is, how it works, and why it matters for Africa's financial future.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Safe Trading</h3>
+                <p>Learn how to buy and sell Bitcoin safely using trusted platforms and methods in Africa.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure Storage</h3>
+                <p>Discover the best Bitcoin wallets and security practices to keep your digital assets safe.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Cross-Border Payments</h3>
+                <p>Find out how Bitcoin can help you send and receive money across African borders efficiently.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chat Widget -->
+    {% include 'widget.html' %}
+    
+    <script src="{{ url_for('static', filename='js/chat_widget.js') }}"></script>
+</body>
+</html> 

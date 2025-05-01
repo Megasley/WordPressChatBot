@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Head -->
+    <circle cx="60" cy="60" r="50" fill="#FF6B4A"/>
+    
+    <!-- Face -->
+    <rect x="35" y="45" width="50" height="35" rx="10" fill="#2D3748"/>
+    
+    <!-- Eyes -->
+    <circle cx="45" cy="60" r="5" fill="white"/>
+    <circle cx="75" cy="60" r="5" fill="white"/>
+    
+    <!-- Antenna -->
+    <line x1="60" y1="10" x2="60" y2="25" stroke="#2D3748" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="60" cy="7" r="3" fill="#FFB547"/>
+    
+    <!-- Speech Bubbles -->
+    <circle cx="90" cy="30" r="10" fill="#00B884"/>
+    <circle cx="100" cy="45" r="8" fill="#FFB547"/>
+    <circle cx="95" cy="15" r="6" fill="#FF6B4A"/>
+</svg>
