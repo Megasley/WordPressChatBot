@@ -37,6 +37,15 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY") or "a secret key"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_size": 10,
+    "max_overflow": 20,
+    "pool_timeout": 30,
+    "pool_recycle": 1800,        # Recycle every 30 mins
+    "pool_pre_ping": True        # 👈 Prevents using dead connections
+}
+
+
 # Initialize the app with the extension
 db.init_app(app)
 
@@ -535,5 +544,5 @@ def get_stats():
 def serve_widget_js():
     return app.send_static_file('js/chat_widget.js')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True)
