@@ -53,7 +53,7 @@ migrate = Migrate(app, db)
 
 # Apply CORS to the app
 # from flask_cors import CORS
-CORS(app, origins=["https://bitcoiners.africa"])
+CORS(app, origins=["https://bitcoiners.africa", "https://staging4.bitcoiners.africa"])
 
 # Create all database tables
 with app.app_context():
