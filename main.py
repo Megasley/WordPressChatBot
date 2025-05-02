@@ -52,7 +52,8 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 # Apply CORS to the app
-CORS(app)
+# from flask_cors import CORS
+CORS(app, origins=["https://bitcoiners.africa"])
 
 # Create all database tables
 with app.app_context():
@@ -544,5 +545,5 @@ def get_stats():
 def serve_widget_js():
     return app.send_static_file('js/chat_widget.js')
 
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
