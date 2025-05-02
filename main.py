@@ -9,6 +9,10 @@ from flask import Flask, request, jsonify, render_template, session
 from flask_cors import CORS
 from flask_migrate import Migrate
 from extensions import db
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, 
